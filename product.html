@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: 'Cairo', Arial, sans-serif; background: linear-gradient(135deg, #ffe0f0 60%, #ffe6fa 100%); margin: 0; padding: 0; min-height: 100vh; }
+        .container { max-width: 420px; margin: 40px auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px #f8b6d2; padding: 32px 18px; text-align: center; }
+        .product-img { width: 260px; height: 260px; object-fit: cover; border-radius: 14px; box-shadow: 0 2px 12px #f8b6d2; margin-bottom: 18px; background: #fff; border: 2px solid #ffe6fa; }
+        .product-title { font-size: 1.5em; color: #e75480; font-weight: bold; margin-bottom: 10px; }
+        .desc { color: #b85c8e; font-size: 1.1em; margin-bottom: 18px; }
+        .price { color: #e75480; font-size: 1.3em; font-weight: bold; margin-bottom: 10px; }
+        .old-price { color: #b85c8e; font-size: 1em; text-decoration: line-through; margin-left: 8px; opacity: 0.7; }
+        .order-btn { background: linear-gradient(90deg, #e75480 60%, #b85c8e 100%); color: #fff; border: none; border-radius: 8px; padding: 12px 28px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 2px 8px #e7548033; transition: background 0.2s, transform 0.2s, box-shadow 0.2s; outline: none; margin-top: 8px; letter-spacing: 1px; }
+        .order-btn:hover, .order-btn:focus { background: linear-gradient(90deg, #b85c8e 60%, #e75480 100%); transform: scale(1.06) translateY(-2px); box-shadow: 0 4px 16px #e7548044; }
+        .product-available, .product-unavailable { display: inline-block; margin-bottom: 12px; font-size: 1em; font-weight: bold; padding: 4px 16px; border-radius: 0 12px 12px 0; }
+        .product-available { background: linear-gradient(90deg, #27ae60 60%, #b8e994 100%); color: #fff; }
+        .product-unavailable { background: linear-gradient(90deg, #e75480 60%, #f8b6d2 100%); color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="container" id="product-details"></div>
+    <script>
+        // نفس بيانات المنتجات من home.html
+        const products = [
+            {img: '1.jpg', price: 150, available: true, old: 0, desc: 'ديكور خشبي أنيق يضفي لمسة جمالية على المنزل.'},
+            {img: '2.jpg', price: 120, available: true, old: 0, desc: 'فازة سيراميك عصرية تناسب جميع الأركان.'},
+            {img: '3.jpg', price: 180, available: false, old: 200, desc: 'لوحة فنية يدوية بألوان هادئة.'},
+            {img: '4.jpg', price: 200, available: true, old: 0, desc: 'شمعدان معدني بتصميم عصري.'},
+            {img: '5.jpg', price: 170, available: false, old: 190, desc: 'مجسم ديكور صغير لطاولة القهوة.'},
+            {img: '6.jpg', price: 140, available: true, old: 0, desc: 'ساعة حائط بتصميم بسيط وأنيق.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.30_91d2ca29.jpg', price: 160, available: true, old: 0, desc: 'ديكور جداري مميز.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.29_3ed72ebf.jpg', price: 155, available: true, old: 0, desc: 'مزهرية زجاجية شفافة.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.30_a550a914.jpg', price: 165, available: false, old: 180, desc: 'ديكور طاولة أنيق.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.29_c39d8202.jpg', price: 145, available: true, old: 0, desc: 'شمعة معطرة برائحة الورد.'},
+            // ... أكمل باقي المنتجات بنفس النمط أو أضف وصف عام
+        ];
+        // جلب رقم المنتج من الرابط
+        const params = new URLSearchParams(window.location.search);
+        const idx = parseInt(params.get('index'));
+        const p = products[idx];
+        if(!p) { document.getElementById('product-details').innerHTML = '<div>المنتج غير موجود</div>'; }
+        else {
+            document.getElementById('product-details').innerHTML = `
+                <div class="${p.available ? 'product-available' : 'product-unavailable'}">${p.available ? 'متوفر' : 'غير متوفر'}</div>
+                <img class="product-img" src="${p.img}" alt="صورة المنتج">
+                <div class="product-title">ديكور منزلي ${idx+1}</div>
+                <div class="desc">${p.desc}</div>
+                <div class="price">${p.price} جنيه${p.old ? `<span class='old-price'>${p.old} جنيه</span>` : ''}</div>
+                <button class="order-btn" id="orderBtn" ${!p.available ? 'disabled style="opacity:.5;cursor:not-allowed;"' : ''}>اطلب الآن</button>
+            `;
+        }
+        // إصلاح زر الطلب ليعمل بشكل صحيح
+        document.getElementById('orderBtn')?.addEventListener('click', function() {
+            if(!p.available) return;
+            var phone = '01023611198';
+            var url = window.location.origin + '/product.html?index=' + idx;
+            var msg = encodeURIComponent('مرحباً، أود طلب هذا المنتج: ' + url);
+            window.open('https://wa.me/' + phone + '?text=' + msg, '_blank');
+        });
+    </script>
+</body>
+</html> 

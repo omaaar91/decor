@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر ديكورات منزلية</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: 'Cairo', Arial, sans-serif; background: linear-gradient(135deg, #ffe0f0 60%, #ffe6fa 100%); margin: 0; padding: 0; min-height: 100vh; }
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 38px 0 18px 0;
+        }
+        .logo {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            box-shadow: 0 4px 24px #f8b6d2, 0 0 0 6px #fff, 0 0 0 12px #ffe6fa;
+            object-fit: cover;
+            background: #fff;
+            margin-bottom: 12px;
+            border: 3px solid #e75480;
+            animation: logoPop 1s cubic-bezier(.4,2,.6,1);
+        }
+        @keyframes logoPop {
+            0% { transform: scale(0.7) rotate(-10deg); opacity: 0; }
+            80% { transform: scale(1.1) rotate(2deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0); }
+        }
+        .shop-title {
+            font-size: 2.1em;
+            color: #e75480;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px #f8b6d2, 0 1px 0 #fff;
+            margin-bottom: 0;
+        }
+        .shop-desc {
+            color: #b85c8e;
+            font-size: 1.1em;
+            margin-top: 6px;
+            margin-bottom: 0;
+            letter-spacing: 1px;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 36px;
+            margin: 40px 0;
+        }
+        .product {
+            background: linear-gradient(120deg, #fff 70%, #ffe0f0 100%);
+            border-radius: 18px;
+            box-shadow: 0 4px 24px #f8b6d2, 0 0 0 4px #ffe0f055;
+            width: 270px;
+            padding: 22px 18px 18px 18px;
+            text-align: center;
+            transition: box-shadow 0.3s, transform 0.3s, background 0.3s;
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px) scale(0.97);
+            animation: fadeInUp 0.8s forwards;
+            overflow: hidden;
+        }
+        .product:nth-child(2) { animation-delay: 0.1s; }
+        .product:nth-child(3) { animation-delay: 0.2s; }
+        .product:nth-child(4) { animation-delay: 0.3s; }
+        .product:nth-child(5) { animation-delay: 0.4s; }
+        .product:nth-child(6) { animation-delay: 0.5s; }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .product:hover {
+            box-shadow: 0 8px 32px #e7548044, 0 0 0 6px #ffe6fa;
+            transform: translateY(-8px) scale(1.03) rotate(-1deg);
+            background: linear-gradient(120deg, #ffe6fa 80%, #fff0f7 100%);
+        }
+        .product img {
+            width: 210px;
+            height: 210px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px #f8b6d2;
+            margin-bottom: 10px;
+            transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s, border-color 0.3s;
+            border: 2px solid #ffe6fa;
+            background: #fff;
+        }
+        .product:hover img {
+            transform: scale(1.07) rotate(2deg);
+            box-shadow: 0 6px 24px #e7548044;
+            border-color: #e75480;
+        }
+        .price {
+            color: #e75480;
+            font-size: 1.4em;
+            margin: 14px 0 10px 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 0 #fff, 0 2px 6px #f8b6d2;
+        }
+        .order-btn {
+            background: linear-gradient(90deg, #e75480 60%, #b85c8e 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 28px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #e7548033;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            outline: none;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+        .order-btn:hover, .order-btn:focus {
+            background: linear-gradient(90deg, #b85c8e 60%, #e75480 100%);
+            transform: scale(1.06) translateY(-2px);
+            box-shadow: 0 4px 16px #e7548044;
+        }
+        .product-available {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: linear-gradient(90deg, #27ae60 60%, #b8e994 100%);
+            color: #fff;
+            font-size: 0.95em;
+            font-weight: bold;
+            padding: 4px 16px;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 2px 8px #27ae6022;
+            z-index: 2;
+            letter-spacing: 1px;
+            animation: badgePop 0.7s cubic-bezier(.4,2,.6,1);
+        }
+        .product-unavailable {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: linear-gradient(90deg, #e75480 60%, #f8b6d2 100%);
+            color: #fff;
+            font-size: 0.95em;
+            font-weight: bold;
+            padding: 4px 16px;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 2px 8px #e7548022;
+            z-index: 2;
+            letter-spacing: 1px;
+            animation: badgePop 0.7s cubic-bezier(.4,2,.6,1);
+        }
+        @keyframes badgePop {
+            0% { transform: scale(0.7) rotate(-10deg); opacity: 0; }
+            80% { transform: scale(1.1) rotate(2deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0); }
+        }
+        .old-price {
+            color: #b85c8e;
+            font-size: 1em;
+            text-decoration: line-through;
+            margin-left: 8px;
+            opacity: 0.7;
+        }
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .products { gap: 24px; }
+            .product { width: 220px; }
+            .product img { width: 170px; height: 170px; }
+        }
+        @media (max-width: 900px) {
+            .products { gap: 16px; }
+            .product { width: 45vw; max-width: 320px; min-width: 180px; }
+            .product img { width: 38vw; max-width: 160px; height: 160px; }
+            .header { margin: 24px 0 10px 0; }
+            .logo { width: 110px; height: 110px; }
+        }
+        @media (max-width: 600px) {
+            .products { flex-direction: column; align-items: center; gap: 18px; }
+            .product { width: 95vw; max-width: 99vw; min-width: 0; padding: 16px 6vw 16px 6vw; }
+            .product img { width: 80vw; max-width: 95vw; height: 45vw; min-height: 120px; }
+            .logo { width: 80px; height: 80px; }
+            .shop-title { font-size: 1.3em; }
+            .order-btn { font-size: 1em; padding: 10px 0; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="9.png " alt="شعار المتجر" class="logo">
+        <div class="shop-title">متجر ديكورات منزلية بسيطة</div>
+        <div class="shop-desc">تسوق أجمل الديكورات المنزلية العصرية بأسعار مميزة</div>
+    </div>
+    <div class="products">
+        <!-- المنتجات ستضاف ديناميكياً عبر جافاسكريبت -->
+    </div>
+    <script>
+        // بيانات المنتجات (صور، أسعار، توفر، خصم، وصف)
+        const products = [
+            {img: '1.jpg', price: 150, available: true, old: 0, desc: 'ديكور خشبي أنيق يضفي لمسة جمالية على المنزل.'},
+            {img: '2.jpg', price: 120, available: true, old: 0, desc: 'فازة سيراميك عصرية تناسب جميع الأركان.'},
+            {img: '3.jpg', price: 180, available: false, old: 200, desc: 'لوحة فنية يدوية بألوان هادئة.'},
+            {img: '4.jpg', price: 200, available: true, old: 0, desc: 'شمعدان معدني بتصميم عصري.'},
+            {img: '5.jpg', price: 170, available: false, old: 190, desc: 'مجسم ديكور صغير لطاولة القهوة.'},
+            {img: '6.jpg', price: 140, available: true, old: 0, desc: 'ساعة حائط بتصميم بسيط وأنيق.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.30_91d2ca29.jpg', price: 160, available: true, old: 0, desc: 'ديكور جداري مميز.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.29_3ed72ebf.jpg', price: 155, available: true, old: 0, desc: 'مزهرية زجاجية شفافة.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.30_a550a914.jpg', price: 165, available: false, old: 180, desc: 'ديكور طاولة أنيق.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.29_c39d8202.jpg', price: 145, available: true, old: 0, desc: 'شمعة معطرة برائحة الورد.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.29_e9e0df3e.jpg', price: 185, available: true, old: 0, desc: 'مجسم ديكور صغير لطاولة القهوة.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.30_e4fdbeb3.jpg', price: 190, available: true, old: 0, desc: 'ساعة حائط بتصميم بسيط وأنيق.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.29_470fd24d.jpg', price: 135, available: true, old: 0, desc: 'ديكور جداري مميز.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.29_2dabaf01.jpg', price: 195, available: true, old: 0, desc: 'مزهرية زجاجية شفافة.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.29_14b2a061.jpg', price: 125, available: true, old: 0, desc: 'مجسم ديكور صغير لطاولة القهوة.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.29_adab6ed6.jpg', price: 180, available: true, old: 0, desc: 'ساعة حائط بتصميم بسيط وأنيق.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.28_470b7b29.jpg', price: 130, available: true, old: 0, desc: 'ديكور جداري مميز.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.24_3a688b0b.jpg', price: 170, available: true, old: 0, desc: 'مزهرية زجاجية شفافة.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.38.52_181e442c.jpg', price: 160, available: true, old: 0, desc: 'ديكور جداري مميز.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.38.52_5c9ddb8b.jpg', price: 140, available: true, old: 0, desc: 'مجسم ديكور صغير لطاولة القهوة.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.38.52_9bd07c88.jpg', price: 150, available: true, old: 0, desc: 'ساعة حائط بتصميم بسيط وأنيق.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.38.52_1397d9bb.jpg', price: 135, available: true, old: 0, desc: 'ديكور جداري مميز.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.39.24_8846de76.jpg', price: 175, available: true, old: 0, desc: 'مزهرية زجاجية شفافة.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.38.53_e2897003.jpg', price: 120, available: true, old: 0, desc: 'ديكور جداري مميز.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.38.52_7e4ac724.jpg', price: 190, available: true, old: 0, desc: 'مجسم ديكور صغير لطاولة القهوة.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.38.51_dffc3085.jpg', price: 180, available: true, old: 0, desc: 'ساعة حائط بتصميم بسيط وأنيق.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.38.52_eda55d0f.jpg', price: 170, available: true, old: 0, desc: 'ديكور جداري مميز.'},
+            {img: 'WhatsApp Image 2025-07-09 at 16.38.51_8335864f.jpg', price: 160, available: true, old: 0, desc: 'مزهرية زجاجية شفافة.'},
+        ];
+        // توليد المنتجات ديناميكياً
+        const productsDiv = document.querySelector('.products');
+        products.forEach((p, i) => {
+            const prod = document.createElement('div');
+            prod.className = 'product';
+            prod.style.cursor = 'pointer';
+            prod.onclick = () => { window.location.href = `product.html?index=${i}`; };
+            // شارة التوفر
+            if(p.available) {
+                prod.innerHTML += '<div class="product-available">متوفر</div>';
+            } else {
+                prod.innerHTML += '<div class="product-unavailable">غير متوفر</div>';
+            }
+            prod.innerHTML += `<img src="${p.img}" alt="ديكور ${i+1}">`;
+            prod.innerHTML += `<div class="price">${p.price} جنيه${p.old ? `<span class='old-price'>${p.old} جنيه</span>` : ''}</div>`;
+            prod.innerHTML += `<button class="order-btn" onclick="event.stopPropagation(); orderProductPage(${i});" ${!p.available ? 'disabled style=\"opacity:.5;cursor:not-allowed;\"' : ''}>اطلب الآن</button>`;
+            productsDiv.appendChild(prod);
+        });
+        // دالة الطلب ترسل المستخدم لواتساب مع لينك المنتج
+        function orderProductPage(idx) {
+            var phone = '01023611198';
+            var url = window.location.origin + '/product.html?index=' + idx;
+            var msg = encodeURIComponent('مرحباً، أود طلب هذا المنتج: ' + url);
+            window.open('https://wa.me/' + phone + '?text=' + msg, '_blank');
+        }
+    </script>
+</body>
+</html>
